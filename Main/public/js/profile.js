@@ -1,14 +1,15 @@
 const newFormHandler = async (event) => {
   event.preventDefault();
 
-  const name = document.querySelector('#project-name').value.trim();
-  const needed_funding = document.querySelector('#project-funding').value.trim();
-  const description = document.querySelector('#project-desc').value.trim();
+  const title = document.querySelector('#article-title').value.trim();
+  const author = document.querySelector('#article-author').value.trim();
+  const description = document.querySelector('#article-description').value.trim();
+  const date = document.querySelector('#article-date');
 
-  if (name && needed_funding && description) {
-    const response = await fetch(`/api/projects`, {
+  if (title && author && description && date) {
+    const response = await fetch(`/api/article`, {
       method: 'POST',
-      body: JSON.stringify({ name, needed_funding, description }),
+      body: JSON.stringify({ title, author, description, date }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -26,22 +27,22 @@ const delButtonHandler = async (event) => {
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
 
-    const response = await fetch(`/api/projects/${id}`, {
+    const response = await fetch(`/api/article/${id}`, {
       method: 'DELETE',
     });
 
     if (response.ok) {
       document.location.replace('/profile');
     } else {
-      alert('Failed to delete project');
+      alert('Failed to delete article');
     }
   }
 };
 
 document
-  .querySelector('.new-project-form')
+  .querySelector('.new-article-form')
   .addEventListener('submit', newFormHandler);
 
 document
-  .querySelector('.project-list')
+  .querySelector('.article-list')
   .addEventListener('click', delButtonHandler);

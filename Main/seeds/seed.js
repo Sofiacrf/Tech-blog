@@ -12,7 +12,7 @@ const seedDatabase = async () => {
     returning: true,
   });
 
-  // change project to another model
+  // change article to another model
   for (const article of articleData) {
     await Article.create({
       ...article,
