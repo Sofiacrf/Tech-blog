@@ -29,18 +29,15 @@ router.get('/', async (req, res) => {
 
 router.get('/article/:id', async (req, res) => {
   try {
-    const articleData = await Article.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
-    });
+    const articleData = await Article.findByPk(req.params.id,);
+    if(!articleData) {
+      res.status(404).json({message: 'No article with this id!'});
+      return;
+    }
 
     const article = articleData.get({ plain: true });
 
-    res.render('article', {
+    res.render('homepage', {
       ...article,
       logged_in: req.session.logged_in
     });
